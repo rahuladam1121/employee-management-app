@@ -10,24 +10,43 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_10_15_000000) do
+ActiveRecord::Schema[7.1].define(version: 2026_11_16_000000) do
+  create_table "departments", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_departments_on_name", unique: true
+  end
+
   create_table "employees", force: :cascade do |t|
     t.string "employee_number", null: false
     t.string "first_name", null: false
     t.string "last_name", null: false
     t.string "email", null: false
     t.string "phone"
-    t.string "department", null: false
     t.string "job_title", null: false
     t.decimal "salary", precision: 12, scale: 2
     t.date "joining_date", null: false
-    t.integer "manager_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "manager_id"
+    t.integer "department_id"
+    t.index ["department_id"], name: "index_employees_on_department_id"
     t.index ["email"], name: "index_employees_on_email", unique: true
     t.index ["employee_number"], name: "index_employees_on_employee_number", unique: true
     t.index ["manager_id"], name: "index_employees_on_manager_id"
   end
 
-  add_foreign_key "employees", "employees", column: "manager_id", on_delete: :nullify
+  create_table "managers", force: :cascade do |t|
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "email", null: false
+    t.string "phone"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_managers_on_email", unique: true
+  end
+
+  add_foreign_key "employees", "departments"
+  add_foreign_key "employees", "managers", on_delete: :nullify
 end

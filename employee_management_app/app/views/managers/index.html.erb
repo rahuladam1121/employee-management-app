@@ -1,0 +1,24 @@
+<div class="topbar">
+  <div><h1>Managers</h1><p class="muted">Manage employee reporting relationships.</p></div>
+  <div class="actions"><%= link_to "Employees", employees_path, class: "button secondary" %><%= link_to "Departments", departments_path, class: "button secondary" %><%= link_to "＋ Add manager", new_manager_path, class: "button" %></div>
+</div>
+<% if @managers.any? %>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Manager</th><th>Email</th><th>Phone</th><th>Employees</th><th>Actions</th></tr></thead>
+      <tbody>
+        <% @managers.each do |manager| %>
+          <tr>
+            <td><strong><%= manager.full_name %></strong></td>
+            <td><%= mail_to manager.email %></td>
+            <td><%= manager.phone.presence || "—" %></td>
+            <td><%= manager.employees.size %></td>
+            <td><div class="actions"><%= link_to "Edit", edit_manager_path(manager) %><%= button_to "Delete", manager_path(manager), method: :delete, form: { data: { turbo_confirm: "Delete #{manager.full_name}? Their employees will be unassigned." } }, class: "button danger" %></div></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <div class="panel"><h2>No managers yet</h2><p class="muted">Create the first manager before adding employees.</p><%= link_to "Create first manager", new_manager_path, class: "button" %></div>
+<% end %>

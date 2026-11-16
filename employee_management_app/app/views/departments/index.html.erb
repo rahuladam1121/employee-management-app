@@ -1,0 +1,23 @@
+<div class="topbar">
+  <div><h1>Departments</h1><p class="muted">Organize employees by department.</p></div>
+  <div class="actions"><%= link_to "Employees", employees_path, class: "button secondary" %><%= link_to "Managers", managers_path, class: "button secondary" %><%= link_to "＋ Add department", new_department_path, class: "button" %></div>
+</div>
+<% if @departments.any? %>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Department</th><th>Employees</th><th>Actions</th></tr></thead>
+      <tbody>
+        <% @departments.each do |department| %>
+          <tr>
+            <td><strong><%= department.name %></strong></td>
+            <td><%= department.employees.size %></td>
+            <td><div class="actions"><%= link_to "Edit", edit_department_path(department) %><%= button_to "Delete", department_path(department), method: :delete, form: { data: { turbo_confirm: "Delete #{department.name}?" } }, class: "button danger" %></div></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <p class="actions" style="margin-top:18px"><%= link_to "Add employee", new_employee_path, class: "button" %></p>
+<% else %>
+  <div class="panel"><h2>No departments yet</h2><p class="muted">Create a department before adding employees.</p><%= link_to "Create first department", new_department_path, class: "button" %></div>
+<% end %>

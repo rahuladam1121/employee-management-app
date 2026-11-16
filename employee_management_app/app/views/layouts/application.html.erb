@@ -26,9 +26,10 @@
     </style>
   </head>
   <body>
-    <header><%= link_to "Employee Management", root_path %></header>
+    <header><%= link_to "Employee Management", root_path %> <span style="float:right;font-size:14px"><%= link_to "Employees", employees_path, style: "margin-right:16px" %><%= link_to "Managers", managers_path, style: "margin-right:16px" %><%= link_to "Departments", departments_path %></span></header>
     <main>
       <% if notice.present? %><div class="notice"><%= notice %></div><% end %>
+      <% if alert.present? %><div class="errors"><%= alert %></div><% end %>
       <%= yield %>
     </main>
   </body>

@@ -1,6 +1,6 @@
 <div class="topbar">
   <div><h1>Employees</h1><p class="muted">Manage employee records and reporting relationships.</p></div>
-  <%= link_to "＋ Add employee", new_employee_path, class: "button" %>
+  <div class="actions"><%= link_to "Managers", managers_path, class: "button secondary" %><%= link_to "Departments", departments_path, class: "button secondary" %><%= link_to "＋ Add employee", new_employee_path, class: "button" %></div>
 </div>
 
 <% if @employees.any? %>
@@ -12,7 +12,7 @@
           <tr>
             <td><strong><%= link_to employee.full_name, employee_path(employee) %></strong></td>
             <td><%= employee.employee_number %></td>
-            <td><%= employee.department %><br><span class="muted"><%= employee.job_title %></span></td>
+            <td><%= employee.department.name %><br><span class="muted"><%= employee.job_title %></span></td>
             <td><%= employee.manager&.full_name || "—" %></td>
             <td><%= mail_to employee.email %></td>
             <td><div class="actions"><%= link_to "Edit", edit_employee_path(employee) %><%= button_to "Delete", employee_path(employee), method: :delete, form: { data: { turbo_confirm: "Delete #{employee.full_name}? Direct reports will become unassigned." } }, class: "button danger" %></div></td>
@@ -22,5 +22,11 @@
     </table>
   </div>
 <% else %>
-  <div class="panel"><h2>No employees yet</h2><p class="muted">Create your first employee record to get started.</p><%= link_to "Add first employee", new_employee_path, class: "button" %></div>
+  <div class="panel"><h2>No employees yet</h2>
+    <% if Department.none? %>
+      <p class="muted">Create a department before adding employees.</p><%= link_to "Add department", new_department_path, class: "button" %>
+    <% else %>
+      <p class="muted">Create your first employee record.</p><%= link_to "Add employee", new_employee_path, class: "button" %>
+    <% end %>
+  </div>
 <% end %>

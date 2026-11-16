@@ -1,5 +1,5 @@
 module EmployeesHelper
-  def employee_manager_options(selected_id = nil)
-    Employee.alphabetical.reject { |employee| employee.id == selected_id }
+  def employee_manager_options
+    Manager.alphabetical
   end
 end

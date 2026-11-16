@@ -1,0 +1,10 @@
+<%= form_with model: department do |form| %>
+  <% if department.errors.any? %>
+    <div class="errors"><strong><%= pluralize(department.errors.count, "error") %> prevented this department from being saved:</strong><ul>
+      <% department.errors.full_messages.each do |message| %><li><%= message %></li><% end %>
+    </ul></div>
+  <% end %>
+
+  <div class="field"><%= form.label :name, "Department name *" %><%= form.text_field :name, required: true, placeholder: "Engineering" %></div>
+  <div class="actions"><%= form.submit %><%= link_to "Cancel", departments_path, class: "button secondary" %></div>
+<% end %>

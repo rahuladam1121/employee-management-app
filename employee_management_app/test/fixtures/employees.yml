@@ -3,7 +3,7 @@ manager:
   first_name: Priya
   last_name: Sharma
   email: priya@example.com
-  department: Engineering
+  department: engineering
   job_title: Engineering Manager
   salary: 1500000
   joining_date: 2020-01-15
@@ -13,7 +13,7 @@ engineer:
   first_name: Rahul
   last_name: Mehta
   email: rahul@example.com
-  department: Engineering
+  department: engineering
   job_title: Software Engineer
   salary: 900000
   joining_date: 2023-06-01
