@@ -1,0 +1,24 @@
+<%= form_with model: employee do |form| %>
+  <% if employee.errors.any? %>
+    <div class="errors"><strong><%= pluralize(employee.errors.count, "error") %> prevented this employee from being saved:</strong><ul>
+      <% employee.errors.full_messages.each do |message| %><li><%= message %></li><% end %>
+    </ul></div>
+  <% end %>
+
+  <div class="details">
+    <div class="field"><%= form.label :employee_number, "Employee ID *" %><%= form.text_field :employee_number, required: true, placeholder: "EMP-001" %></div>
+    <div class="field"><%= form.label :first_name, "First name *" %><%= form.text_field :first_name, required: true %></div>
+    <div class="field"><%= form.label :last_name, "Last name *" %><%= form.text_field :last_name, required: true %></div>
+    <div class="field"><%= form.label :email, "Work email *" %><%= form.email_field :email, required: true, placeholder: "name@example.com" %></div>
+    <div class="field"><%= form.label :phone, "Phone" %><%= form.telephone_field :phone %></div>
+    <div class="field"><%= form.label :department, "Department *" %><%= form.text_field :department, required: true, placeholder: "Engineering" %></div>
+    <div class="field"><%= form.label :job_title, "Job title *" %><%= form.text_field :job_title, required: true, placeholder: "Software Engineer" %></div>
+    <div class="field"><%= form.label :salary, "Annual salary" %><%= form.number_field :salary, min: 0, step: "0.01", placeholder: "e.g. 900000" %></div>
+    <div class="field"><%= form.label :joining_date, "Joining date *" %><%= form.date_field :joining_date, required: true %></div>
+    <div class="field"><%= form.label :manager_id, "Manager" %>
+      <%= form.collection_select :manager_id, employee_manager_options(employee.id), :id, :full_name, { include_blank: "No manager (top-level employee)" } %>
+      <p class="muted">Choose an existing employee. Leave blank for a top-level employee.</p>
+    </div>
+  </div>
+  <div class="actions"><%= form.submit %><%= link_to "Cancel", employee.persisted? ? employee_path(employee) : employees_path, class: "button secondary" %></div>
+<% end %>

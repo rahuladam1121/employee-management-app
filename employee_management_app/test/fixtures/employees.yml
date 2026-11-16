@@ -1,0 +1,20 @@
+manager:
+  employee_number: MGR-001
+  first_name: Priya
+  last_name: Sharma
+  email: priya@example.com
+  department: Engineering
+  job_title: Engineering Manager
+  salary: 1500000
+  joining_date: 2020-01-15
+
+engineer:
+  employee_number: EMP-001
+  first_name: Rahul
+  last_name: Mehta
+  email: rahul@example.com
+  department: Engineering
+  job_title: Software Engineer
+  salary: 900000
+  joining_date: 2023-06-01
+  manager: manager

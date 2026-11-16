@@ -1,0 +1,18 @@
+<div class="topbar"><div><h1><%= @employee.full_name %></h1><p class="muted"><%= @employee.job_title %> · <%= @employee.department %></p></div><div class="actions"><%= link_to "Edit", edit_employee_path(@employee), class: "button" %><%= link_to "All employees", employees_path, class: "button secondary" %></div></div>
+<div class="panel">
+  <div class="details">
+    <div><div class="detail-label">Employee ID</div><strong><%= @employee.employee_number %></strong></div>
+    <div><div class="detail-label">Email</div><strong><%= mail_to @employee.email %></strong></div>
+    <div><div class="detail-label">Phone</div><strong><%= @employee.phone.presence || "—" %></strong></div>
+    <div><div class="detail-label">Department</div><strong><%= @employee.department %></strong></div>
+    <div><div class="detail-label">Job title</div><strong><%= @employee.job_title %></strong></div>
+    <div><div class="detail-label">Annual salary</div><strong><%= @employee.salary ? number_to_currency(@employee.salary, unit: "₹", precision: 2) : "—" %></strong></div>
+    <div><div class="detail-label">Joining date</div><strong><%= l(@employee.joining_date, format: :long) %></strong></div>
+    <div><div class="detail-label">Manager</div><strong><%= @employee.manager ? link_to(@employee.manager.full_name, employee_path(@employee.manager)) : "None" %></strong></div>
+  </div>
+</div>
+<div class="panel" style="margin-top:18px"><h2>Direct reports</h2>
+  <% if @employee.subordinates.any? %>
+    <ul><% @employee.subordinates.alphabetical.each do |person| %><li><%= link_to person.full_name, employee_path(person) %> — <%= person.job_title %></li><% end %></ul>
+  <% else %><p class="muted">This employee has no direct reports.</p><% end %>
+</div>
